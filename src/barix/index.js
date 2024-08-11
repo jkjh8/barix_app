@@ -16,7 +16,6 @@ function fnStartPolling() {
   logger.info(`바릭스 데이터 수집 시작: Polling every ${polling} seconds`)
   interval = setInterval(() => {
     fnGetBarixData()
-    console.log('Polling...')
   }, polling * 1000)
 }
 
