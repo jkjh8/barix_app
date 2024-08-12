@@ -32,7 +32,7 @@ const getHtml = async (ipaddress) => {
         mediaformat: $('#mediaformat').text().trim(),
         rtpdelay: Number($('#rtpdelay').text().trim()),
         rtpdelayave: Number($('#rtpdelayave').text().trim()),
-        lasterror: $('#lasterror').text().trim(),
+        // lasterror: $('#lasterror').text().trim(),
         relay1: Number($('#relay1').text().trim()),
         relay2: Number($('#relay2').text().trim()),
         relay3: Number($('#relay3').text().trim()),

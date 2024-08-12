@@ -15,16 +15,16 @@ const fnGetBarix = async (device) => {
     // 메시지 수신
     worker.on('message', async (data) => {
       if (data.status) {
-        Barix.updateOne(
+        await Barix.updateOne(
           { ipaddress: device.ipaddress },
           { ...data, status: true, reconnect: 0 }
-        ).exec()
+        )
         // 상태 변경 로그
         if (device.status === false) {
           logInfo(`Barix 연결 ${device.ipaddress}`, 'BARIX')
         }
       } else {
-        Barix.updateOne(
+        await Barix.updateOne(
           { ipaddress: device.ipaddress },
           { status: false, reconnect: device.reconnect + 1 }
         ).exec()
@@ -42,11 +42,11 @@ const fnGetBarix = async (device) => {
     // 종료시
     worker.on('exit', (code) => {
       if (code !== 1) {
-        logError(`Barix 정보 수집 비정상 종료 ${code}`, 'BARIX')
+        logger.warn(`Barix 정보 수집 비정상 종료 ${code}`, 'BARIX')
       }
     })
   } catch (error) {
-    logger.error(`fnGetBarix: ${error}`)
+    logError(`Barix 데이터 수집 오류: ${error}`)
   }
 }
 
