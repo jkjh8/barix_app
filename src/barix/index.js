@@ -41,9 +41,10 @@ const fnGetBarixData = async () => {
     }
     barix = [...data.barix]
     // 바릭스 데이터 가져오기 시작
-    barix.forEach((device) => {
-      fnGetBarix(device)
-    })
+
+    // 기존 코드
+    // Promise.map으로 변경된 코드
+    Promise.all(barix.map((device) => fnGetBarix(device)))
   } catch (error) {
     logger.error(`fnGetBarixData: ${error}`)
   }
