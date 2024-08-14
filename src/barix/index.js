@@ -2,7 +2,7 @@
 const axios = require('axios')
 const https = require('https')
 const logger = require('../logger')
-const { fnGetBarix } = require('../api')
+const { fnGetBarix } = require('../api/barix')
 
 let polling = 50
 let interval = null
@@ -13,6 +13,7 @@ const agent = new https.Agent({
 })
 
 function fnStartPolling() {
+  fnGetBarixData()
   logger.info(`바릭스 데이터 수집 시작: Polling every ${polling} seconds`)
   interval = setInterval(() => {
     fnGetBarixData()
@@ -44,7 +45,7 @@ const fnGetBarixData = async () => {
 
     // 기존 코드
     // Promise.map으로 변경된 코드
-    Promise.all(barix.map((device) => fnGetBarix(device)))
+    barix.forEach((device) => fnGetBarix(device))
   } catch (error) {
     logger.error(`fnGetBarixData: ${error}`)
   }
