@@ -3,6 +3,7 @@ const axios = require('axios')
 const https = require('https')
 const logger = require('../logger')
 const { fnGetBarix } = require('../api/barix')
+const socket = require('@socket')
 
 let polling = 50
 let interval = null
@@ -21,6 +22,7 @@ function fnStartPolling() {
 }
 
 function fnUpdatePollingTime(seconds) {
+  if (polling == seconds) return
   logger.info(
     `바릭스 데이터 수집 주기 변경: ${polling} seconds -> ${seconds} seconds`
   )
@@ -37,9 +39,7 @@ const fnGetBarixData = async () => {
         authenticate: process.env.BARIX_PASS
       }
     })
-    if (polling != data.polling) {
-      fnUpdatePollingTime(data.polling)
-    }
+    socket.socket.emit('polling')
     barix = [...data.barix]
     // 바릭스 데이터 가져오기 시작
 

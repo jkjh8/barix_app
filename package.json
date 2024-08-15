@@ -17,6 +17,7 @@
     "module-alias": "^2.2.3",
     "moment": "^2.30.1",
     "mongoose": "^8.2.2",
+    "socket.io-client": "^4.7.5",
     "winston": "^3.10.0",
     "winston-daily-rotate-file": "^4.7.1"
   },
@@ -27,6 +28,7 @@
     "@src": "src",
     "@logger": "src/logger",
     "@api": "src/api",
-    "@db": "src/db"
+    "@db": "src/db",
+    "@socket": "src/socket"
   }
 }
