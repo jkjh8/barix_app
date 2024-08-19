@@ -22,6 +22,8 @@ function fnStartPolling() {
 }
 
 function fnUpdatePollingTime(seconds) {
+  if (seconds) return
+  if (typeof seconds !== 'number') return
   if (polling == seconds) return
   logger.info(
     `바릭스 데이터 수집 주기 변경: ${polling} seconds -> ${seconds} seconds`
@@ -35,7 +37,8 @@ function fnUpdatePollingTime(seconds) {
 const fnGetBarixData = async () => {
   try {
     barix = await Barix.find()
-    socket.socket.emit('polling')
+    const { data } = await axios.get('http://127.0.0.1:3000/api/barix/polling')
+    fnUpdatePollingTime(data.polling)
     barix.forEach((device) => fnGetBarix(device))
   } catch (error) {
     logger.error(`fnGetBarixData: ${error}`)
