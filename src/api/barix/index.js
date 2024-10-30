@@ -53,11 +53,13 @@ const fnGetBarix = (device) => {
       })
     })
     .catch((error) => {
+      if (device && device.status === false) {
+        logError(`Barix 연결 오류 ${device.ipaddress} ${error}`, 'BARIX')
+      }
       fnDbUpdate(device, {
         status: false,
         reconnect: device.reconnect + 1
       })
-      logError(`Barix 연결 오류 ${device.ipaddress} ${error}`, 'BARIX')
     })
 }
 
